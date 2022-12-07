@@ -2,11 +2,8 @@ package Main;
 
 import Account.ManageAccount;
 import ManageDictionary.Dictionary;
-
-import java.sql.SQLOutput;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class Main {
 
@@ -62,7 +59,7 @@ public class Main {
             System.out.println("⎟   1. Thêm từ vựng         ⎟");
             System.out.println("⎟   2. Tra từ vựng          ⎟");
             System.out.println("⎟   3. Bổ sung định nghĩa   ⎟");
-            System.out.println("⎟   4. Xóa bỏ một mục từ    ⎟");
+            System.out.println("⎟   4. Xóa một mục từ       ⎟");
             System.out.println("⎟   5. Hiển thị từ điển     ⎟");
             System.out.println("⎟   6. Đăng xuất            ⎟");
             System.out.println("└———————————————————————————┘");

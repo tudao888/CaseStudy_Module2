@@ -2,7 +2,7 @@ package Account;
 
 import java.io.Serializable;
 
-public class Account implements Serializable {
+public class Account implements Serializable{
     private String username;
     private String password;
 
@@ -29,5 +29,4 @@ public class Account implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }

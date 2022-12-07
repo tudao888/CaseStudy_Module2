@@ -22,7 +22,7 @@ public class ManageAccount {
             if (checkInputUsername(username)) {
                 break;
             } else {
-                System.err.println("Tài khoản bắt đầu bằng ký tự in hoa, dài từ 6-12 ký tự, và không bao gồm ký tự đặc biệt !@#$%^&*_+-");;
+                System.err.println("Tài khoản bắt đầu bằng ký tự in hoa, dài từ 6-12 ký tự, và không bao gồm ký tự đặc biệt !@#$%^&*_+-");
             }
         }
 
@@ -154,8 +154,7 @@ public class ManageAccount {
 
             } else {
                 countUsername--;
-                System.out.println("Tài khoản không tồn lại, hãy thử lại");
-                System.out.println("Bạn còn " + countUsername + " lần nhập");
+                System.err.println("Tài khoản không tồn lại, " + "bạn còn " + countUsername + " lần nhập");
                 if (countUsername == 0) {
                     System.out.println("Bạn đã nhập sai tài khoản 3 lần, hệ thống tự đóng");
                     return;
