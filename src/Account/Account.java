@@ -30,12 +30,4 @@ public class Account implements Serializable {
         this.password = password;
     }
 
-
-    @Override
-    public String toString() {
-        return "Account{" +
-                "username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
 }

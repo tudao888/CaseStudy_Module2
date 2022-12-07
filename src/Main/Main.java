@@ -20,7 +20,7 @@ public class Main {
             System.out.println("⎟    3.Đổi mật khẩu  ⎟");
             System.out.println("⎟    4.Thoát         ⎟");
             System.out.println("└————————————————————┘");
-            System.out.print("Nhập lựa chọn số: ");
+            System.out.println("Nhập lựa chọn số: ");
             int choice = 0;
             do {
                 try {
@@ -66,17 +66,17 @@ public class Main {
             System.out.println("⎟   5. Hiển thị từ điển     ⎟");
             System.out.println("⎟   6. Đăng xuất            ⎟");
             System.out.println("└———————————————————————————┘");
-            System.out.print("Nhập lựa chọn số: ");
+            System.out.println("Nhập lựa chọn số: ");
             while (true) {
                 try {
                     choice = Integer.parseInt(scanner.nextLine());
-                    if (choice < 0) {
-                        System.out.println("Phải nhập số > 0");
+                    if (choice <= 0 | choice >= 7) {
+                        System.out.println("Nhập lựa chọn từ 1 tới 6");
                     } else {
                         break;
                     }
                 } catch (Exception e) {
-                    System.out.println("Phải nhập số");
+                    System.out.println("Chỉ nhập số");
                 }
             }
 

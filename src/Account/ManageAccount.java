@@ -166,7 +166,7 @@ public class ManageAccount {
 
     public boolean checkInputUsername(String username) {
 
-        String regexUsername = "^[A-Z][a-zA-Z]{5,12}$";
+        String regexUsername = "^[A-Z]\\w{5,12}$";
 
         return username.matches(regexUsername);
     }

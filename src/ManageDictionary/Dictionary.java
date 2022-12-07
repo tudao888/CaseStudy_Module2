@@ -11,34 +11,29 @@ public class Dictionary {
     Word newWord3 = new Word("specific", "rành mạch", "specific", "specifics", " ", "exact, precise");
     Word newWord4 = new Word("resolve", "kiên quyết", " ", "resolution", "resolve", "resolution, determination");
     Word newWord5 = new Word("earth", "trái đất", "earthy", " earth", "unearth", "world, global");
-
-    Map<String, Word> wordList = (Map<String, Word>) ReadAndWriteDictionary.readDictionary();
-    List<Word> list = new ArrayList<>();
+    List<Word> list = (List<Word>) ReadAndWriteDictionary.readDictionary();
 
 
     {
-        wordList.put(newWord1.getName(), newWord1);
-        wordList.put(newWord2.getName(), newWord2);
-        wordList.put(newWord3.getName(), newWord3);
-        wordList.put(newWord4.getName(), newWord4);
-        wordList.put(newWord5.getName(), newWord5);
-        list.add(newWord1);
-        list.add(newWord2);
-        list.add(newWord3);
-        list.add(newWord4);
-        list.add(newWord5);
+        if (list.isEmpty()) {
+            list.add(newWord1);
+            list.add(newWord2);
+            list.add(newWord3);
+            list.add(newWord4);
+            list.add(newWord5);
+        }
     }
 
-    public Word creatWord() {
+    public Word createWord() {
         String name, meaning, adjective, noun, verb, synonym;
-        String regexString = "^.*$";
+        String regexString = "^[a-zA-Z- .]*$";
         do {
             System.out.println("Nhập từ tiếng anh: ");
             name = scanner.nextLine();
             if (name.matches(regexString)) {
                 break;
             } else {
-                System.err.println("Chỉ nhập chữ");
+                System.err.println("Hãy nhập chữ");
             }
         } while (true);
 
@@ -48,7 +43,7 @@ public class Dictionary {
             if (meaning.matches(regexString)) {
                 break;
             } else {
-                System.out.println("Chỉ nhập chữ");
+                System.out.println("Hãy nhập chữ");
             }
         } while (true);
 
@@ -58,7 +53,7 @@ public class Dictionary {
             if (adjective.matches(regexString)) {
                 break;
             } else {
-                System.out.println("Chỉ nhập chữ");
+                System.out.println("Hãy nhập chữ");
             }
         } while (true);
 
@@ -68,7 +63,7 @@ public class Dictionary {
             if (noun.matches(regexString)) {
                 break;
             } else {
-                System.out.println("Chỉ nhập chữ");
+                System.out.println("Hãy nhập chữ");
             }
         } while (true);
 
@@ -78,7 +73,7 @@ public class Dictionary {
             if (verb.matches(regexString)) {
                 break;
             } else {
-                System.out.println("Chỉ nhập chữ");
+                System.out.println("Hãy nhập chữ");
             }
         } while (true);
 
@@ -88,7 +83,7 @@ public class Dictionary {
             if (synonym.matches(regexString)) {
                 break;
             } else {
-                System.out.println("Chỉ nhập chữ");
+                System.out.println("Hãy nhập chữ");
             }
         } while (true);
         Word word = new Word(name, meaning, adjective, noun, verb, synonym);
@@ -96,35 +91,29 @@ public class Dictionary {
     }
 
     public void addWord() {
-        Word newWord = creatWord();
-        wordList.put(newWord.getName(), newWord);
+        Word newWord = createWord();
         list.add(newWord);
-        ReadAndWriteDictionary.writeDictionary(wordList);
+        ReadAndWriteDictionary.writeDictionary(list);
         System.out.println("Thêm từ thành công!");
     }
 
     public void lookUp() {
-        if (wordList.size() == 0) {
+        if (list.size() == 0) {
             System.out.println("Từ điển rỗng, bạn cần thêm từ mới!");
         } else {
-            int count = 0;
             String name = null;
-            String regexString = "^([a-zA-Z- .]*)+(.)*$";
+            String regexString = "^[a-zA-Z- .]*$";
             do {
                 System.out.println("Nhập từ muốn tra: ");
                 name = scanner.nextLine();
                 if (name.matches(regexString)) {
-                    if (checkKey(name)) {
+                    int index = findIndexByName(name);
+                    if (index != -1) {
                         displayOneWord(name);
                         break;
                     } else {
-                        System.out.println("Không có trong từ điển, hãy nhập lại!");
-                        count++;
-                        if (count == 3) {
-                            break;
-                        }
+                        System.out.println("Không có trong từ điển!");
                     }
-
                 } else {
                     System.out.println("Chỉ nhập chữ");
                 }
@@ -132,23 +121,25 @@ public class Dictionary {
         }
     }
 
-
-    public boolean checkKey(String name) {
-        if (wordList.containsKey(name)) {
-            return true;
-        } else {
-            return false;
+    public int findIndexByName(String name) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getName().equals(name)) {
+                return i;
+            }
         }
+        return -1;
     }
 
+
     public void addDefinition() {
-        if (wordList.size() == 0) {
+        if (list.size() == 0) {
             System.out.println("Từ điển rỗng, bạn cần thêm từ mới!");
         } else {
             System.out.println("Nhập từ muốn sửa!");
             String name = scanner.nextLine();
             while (true) {
-                if (checkKey(name)) {
+                int index = findIndexByName(name);
+                if (index != -1) {
                     System.out.println("┌——————————— EDITWORD ———————————┐");
                     System.out.println("⎟   1.Sửa phần nghĩa.            ⎟");
                     System.out.println("⎟   2.Sửa phần tính từ.          ⎟");
@@ -158,16 +149,28 @@ public class Dictionary {
                     System.out.println("⎟   6. Thoát.                    ⎟");
                     System.out.println("└————————————————————————————————┘");
                     System.out.println("Chọn thành phần muốn sửa");
-                    int choice = Integer.parseInt(scanner.nextLine());
+                    int choice = 0;
+                    do {
+                        try {
+                            choice = Integer.parseInt(scanner.nextLine());
+                            if (choice <= 0 | choice >= 7) {
+                                System.out.println("Nhập lựa chọn từ 1 tới 6");
+                            } else {
+                                break;
+                            }
+                        } catch (InputMismatchException | NumberFormatException e) {
+                            System.out.println("Chỉ nhập số!");
+                        }
+                    } while (true);
                     String newMeaning, newAdj, newNoun, newVerb, newSynonym;
-                    String regexString = "^([a-zA-Z- .]*)+(.)*$";
+                    String regexString = "^\\w.*$";
                     switch (choice) {
                         case 1:
                             do {
                                 System.out.println("Nhập nghĩa mới");
                                 newMeaning = scanner.nextLine();
                                 if (regexString.matches(newMeaning)) {
-                                    wordList.get(name).setMeaning(newMeaning);
+                                    list.get(index).setMeaning(newMeaning);
                                     System.out.println("Cập nhật thành công");
                                     break;
                                 } else {
@@ -175,14 +178,14 @@ public class Dictionary {
                                 }
                             }
                             while (true);
-                            ReadAndWriteDictionary.writeDictionary(wordList);
+                            ReadAndWriteDictionary.writeDictionary(list);
                             break;
                         case 2:
                             do {
                                 System.out.println("Nhập bổ sung phần tính từ");
                                 newAdj = scanner.nextLine();
                                 if (newAdj.matches(regexString)) {
-                                    wordList.get(name).setAdjective(newAdj);
+                                    list.get(index).setAdjective(newAdj);
                                     System.out.println("Cập nhật thành công");
                                     break;
                                 } else {
@@ -190,14 +193,14 @@ public class Dictionary {
                                 }
                             }
                             while (true);
-                            ReadAndWriteDictionary.writeDictionary(wordList);
+                            ReadAndWriteDictionary.writeDictionary(list);
                             break;
                         case 3:
                             do {
                                 System.out.println("Nhập bổ sung phần danh từ");
                                 newNoun = scanner.nextLine();
                                 if (newNoun.matches(regexString)) {
-                                    wordList.get(name).setAdjective(newNoun);
+                                    list.get(index).setNoun(newNoun);
                                     System.out.println("Cập nhật thành công");
                                     break;
                                 } else {
@@ -205,14 +208,14 @@ public class Dictionary {
                                 }
                             }
                             while (true);
-                            ReadAndWriteDictionary.writeDictionary(wordList);
+                            ReadAndWriteDictionary.writeDictionary(list);
                             break;
                         case 4:
                             do {
                                 System.out.println("Nhập bổ sung phần động từ");
                                 newVerb = scanner.nextLine();
                                 if (newVerb.matches(regexString)) {
-                                    wordList.get(name).setVerb(newVerb);
+                                    list.get(index).setVerb(newVerb);
                                     System.out.println("Cập nhật thành công");
                                     break;
                                 } else {
@@ -220,14 +223,14 @@ public class Dictionary {
                                 }
                             }
                             while (true);
-                            ReadAndWriteDictionary.writeDictionary(wordList);
+                            ReadAndWriteDictionary.writeDictionary(list);
                             break;
                         case 5:
                             do {
                                 System.out.println("Nhập bổ sung phần từ đồng nghĩa");
                                 newSynonym = scanner.nextLine();
                                 if (newSynonym.matches(regexString)) {
-                                    wordList.get(name).setSynonym(newSynonym);
+                                    list.get(index).setSynonym(newSynonym);
                                     System.out.println("Cập nhật thành công");
                                     break;
                                 } else {
@@ -235,7 +238,7 @@ public class Dictionary {
                                 }
                             }
                             while (true);
-                            ReadAndWriteDictionary.writeDictionary(wordList);
+                            ReadAndWriteDictionary.writeDictionary(list);
                             break;
                         case 6:
                             return;
@@ -251,7 +254,7 @@ public class Dictionary {
     }
 
     public void deleteWord() {
-        if (wordList.size() == 0) {
+        if (list.size() == 0) {
             System.out.println("Từ điển rỗng, bạn cần thêm từ mới!");
         } else {
             String regexString = "^([a-zA-Z- ]*)+(.)*$";
@@ -260,8 +263,9 @@ public class Dictionary {
                 System.out.println("Nhập từ muốn xóa!");
                 deleteWord = scanner.nextLine();
                 if (deleteWord.matches(regexString)) {
-                    if (checkKey(deleteWord)) {
-                        wordList.remove(deleteWord);
+                    int index = findIndexByName(deleteWord);
+                    if (index != -1) {
+                        list.remove(index);
                         System.out.println("Xóa từ thành công");
                     } else {
                         System.out.println("Không có từ này trong từ điển");
@@ -272,22 +276,11 @@ public class Dictionary {
                 }
             } while (true);
         }
-    }
-
-    public void show() {
-        if (wordList.size() == 0) {
-            System.out.println("Từ điển rỗng, thêm từ mới");
-            addWord();
-        } else {
-            TreeMap<String, Word> sorted = new TreeMap<>(wordList);
-            for (Map.Entry<String, Word> entry : sorted.entrySet()) {
-                System.out.println(entry.getValue());
-            }
-        }
+        ReadAndWriteDictionary.writeDictionary(list);
     }
 
     public void sortWordOfList() {
-        if (wordList.size() == 0) {
+        if (list.size() == 0) {
             System.out.println("Từ điển rỗng, thêm từ mới");
             addWord();
         }
