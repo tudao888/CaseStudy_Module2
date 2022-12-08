@@ -26,7 +26,7 @@ public class Dictionary {
 
     public Word createWord() {
         String name, meaning, adjective, noun, verb, synonym;
-        String regexString = "^[a-zA-Z- .]*$";
+        String regexString = "^.*$";
         do {
             System.out.println("Nhập từ tiếng anh: ");
             name = scanner.nextLine();
@@ -163,7 +163,7 @@ public class Dictionary {
                         }
                     } while (true);
                     String newMeaning, newAdj, newNoun, newVerb, newSynonym;
-                    String regexString = "^\\w.*$";
+                    String regexString = "^.*$";
                     switch (choice) {
                         case 1:
                             do {
